@@ -21,26 +21,31 @@ class MainWindow(QMainWindow):
         screen = app.primaryScreen()
         screenGeometry = screen.geometry()
 
-        self.setWindowTitle("Hello World of QT via PySide6")
-        button = QPushButton("Click here")
-        button.setCheckable(True)
-        button.clicked.connect(self.buttonWasClicked)
-
         width = screenGeometry.width() / 2
         height = screenGeometry.height() / 2
         self.setFixedSize(QSize(width, height))          # Width, Height
-
 
         # self.setFixedSize(QSize(960, 540))          # Width, Height
         self.setMinimumSize(QSize(300, 300))          # Width, Height
         self.setMaximumSize(QSize(1000, 1000))        # Width, Height
 
+        self.setWindowTitle("Hello World of QT via PySide6")
+        self.buttonIsChecked = True
+
+        button = QPushButton("Click here")
+        button.setCheckable(True)
+        button.clicked.connect(self.buttonWasClicked)
+        button.clicked.connect(self.buttonWasToggled)
+        button.setChecked(self.buttonIsChecked)
+
         # sets button as central widget of main window
         self.setCentralWidget(button)
 
     def buttonWasClicked(self):
-        print("Closing app")
-        app.quit()
+        print("Button clicked")
+    def buttonWasToggled(self, checked):
+        self.buttonIsChecked = checked
+        print("State", self.buttonIsChecked)
 
 
 # Need atleast 1 QApplication instance per application
