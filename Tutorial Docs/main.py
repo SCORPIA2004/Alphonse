@@ -11,13 +11,45 @@ from PySide6.QtWidgets import (
 
 
 import sys
+from random import choice
 
+windowTitles = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+]
 class MainWindow(QMainWindow):
     # When you subclass a Qt class you must always call the super
     # __init__ function to allow Qt to set up the object.
     def __init__(self):
         super().__init__()
 
+        self.setSizeOfWindow()
+        self.setWindowTitle("Hello World of QT via PySide6")
+
+        self.buttonIsChecked = True
+
+        self.button = QPushButton("Click here")
+        self.button.clicked.connect(self.buttonWasClicked)
+        # self.windowTitleChanged.connect()
+        # sets button as central widget of main window
+        self.setCentralWidget(self.button)
+
+
+
+    def buttonWasReleased(self):
+        self.buttonIsChecked = self.button.isChecked()
+        print(self.buttonIsChecked)
+    def buttonWasClicked(self):
+        print("Changing title...")
+        newWindowTitle = choice(windowTitles)
+        self.setWindowTitle(newWindowTitle)
+        if newWindowTitle == "5":
+            self.button.setDisabled(True)
+            self.button.setText("Disabled")
+    def setSizeOfWindow(self):
         screen = app.primaryScreen()
         screenGeometry = screen.geometry()
 
@@ -28,28 +60,6 @@ class MainWindow(QMainWindow):
         # self.setFixedSize(QSize(960, 540))          # Width, Height
         self.setMinimumSize(QSize(300, 300))          # Width, Height
         self.setMaximumSize(QSize(1000, 1000))        # Width, Height
-
-        self.setWindowTitle("Hello World of QT via PySide6")
-
-        self.buttonIsChecked = True
-
-        self.button = QPushButton("Click here")
-        self.button.setCheckable(True)
-        self.button.released.connect(self.buttonWasReleased)
-        self.button.setChecked(self.buttonIsChecked)
-
-        # sets button as central widget of main window
-        self.setCentralWidget(self.button)
-
-    def buttonWasReleased(self):
-        self.buttonIsChecked = self.button.isChecked()
-        print(self.buttonIsChecked)
-    def buttonWasClicked(self):
-        print("Button clicked")
-        self.button.setText("Already clicked once")
-        self.button.setEnabled(False)
-
-        self.setWindowTitle("Clicked")
 
 
 
