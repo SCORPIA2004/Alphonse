@@ -31,13 +31,19 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Hello World of QT via PySide6")
 
+        self.buttonIsChecked = True
+
         self.button = QPushButton("Click here")
         self.button.setCheckable(True)
-        self.button.clicked.connect(self.buttonWasClicked)
+        self.button.released.connect(self.buttonWasReleased)
+        self.button.setChecked(self.buttonIsChecked)
 
         # sets button as central widget of main window
         self.setCentralWidget(self.button)
 
+    def buttonWasReleased(self):
+        self.buttonIsChecked = self.button.isChecked()
+        print(self.buttonIsChecked)
     def buttonWasClicked(self):
         print("Button clicked")
         self.button.setText("Already clicked once")
