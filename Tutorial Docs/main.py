@@ -7,6 +7,9 @@ from PySide6.QtWidgets import (
     QWidget,
     QPushButton,
     QMainWindow,
+    QLabel,
+    QLineEdit,
+    QVBoxLayout,
 )
 
 
@@ -29,15 +32,25 @@ class MainWindow(QMainWindow):
         self.setSizeOfWindow()
         self.setWindowTitle("Hello World of QT via PySide6")
 
-        self.buttonIsChecked = True
+        # START HERE #
 
-        self.button = QPushButton("Click here")
-        self.button.clicked.connect(self.buttonWasClicked)
-        # self.windowTitleChanged.connect()
-        # sets button as central widget of main window
-        self.setCentralWidget(self.button)
+        # add the label
+        self.label = QLabel()
+        # add the input field
+        self.input = QLineEdit()
+        # change the label based oon input
+        self.input.textChanged.connect(self.label.setText)
 
+        # add both into box
+        layout = QVBoxLayout()
+        layout.addWidget(self.input)
+        layout.addWidget(self.label)
 
+        # set container's layout
+        container = QWidget()
+        container.setLayout(layout)
+
+        self.setCentralWidget(container)
 
     def buttonWasReleased(self):
         self.buttonIsChecked = self.button.isChecked()
