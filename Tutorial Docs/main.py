@@ -2,6 +2,7 @@ from PySide6.QtCore import (
     QSize,
     Qt,
 )
+from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import (
     QApplication,
     QWidget,
@@ -10,6 +11,8 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QVBoxLayout,
+    QDoubleSpinBox,
+    QDial,
 )
 
 
@@ -38,19 +41,45 @@ class MainWindow(QMainWindow):
         self.label = QLabel()
         # add the input field
         self.input = QLineEdit()
+        # add a spin box
+        self.doubleSpinBox = QDoubleSpinBox()
+        # add dial
+        self.dial = QDial()
+        self.labelForDial = QLabel()
+
         # change the label based oon input
         self.input.textChanged.connect(self.label.setText)
+
+        # link dial to something
+        self.dial.setMinimum(-50)
+        self.dial.setMaximum(50)
+        self.dial.setValue(50)
+        self.dial.valueChanged.connect(self.valueOfDial)
+        self.dial.setNotchesVisible(True)
+        self.dial.setSizeIncrement(10,10)
+
+        # Customize the color and style
+        palette = self.dial.palette()
+        palette.setColor(QPalette.ColorRole.Button, QColor("#FFFF70"))  # Set the background color
+        palette.setColor(QPalette.ColorRole.Highlight, QColor("#FF0000"))  # Set the highlighting color
+        self.dial.setPalette(palette)
 
         # add both into box
         layout = QVBoxLayout()
         layout.addWidget(self.input)
         layout.addWidget(self.label)
+        layout.addWidget(self.doubleSpinBox)
+        layout.addWidget(self.dial)
+        layout.addWidget(self.labelForDial)
 
         # set container's layout
         container = QWidget()
         container.setLayout(layout)
 
         self.setCentralWidget(container)
+
+    def valueOfDial(self):
+        self.labelForDial.setText( str(self.dial.value()) )
 
     def buttonWasReleased(self):
         self.buttonIsChecked = self.button.isChecked()
