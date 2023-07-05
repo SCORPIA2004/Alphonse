@@ -1,3 +1,5 @@
+from time import sleep
+
 from PySide6.QtWidgets import (
   QApplication,
   QHBoxLayout,
@@ -28,7 +30,6 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("My App")
-        self.setSizeOfWindow()
 
         # create layouts. pageLayout: main layout, buttonLayout: layout for buttons
         pagelayout = QVBoxLayout()
@@ -39,29 +40,9 @@ class MainWindow(QMainWindow):
         pagelayout.addLayout(buttonLayout)
         pagelayout.addLayout(self.stacklayout)
 
-        # set slot for Red button
-        btn = QPushButton("Red")
-        btn.pressed.connect(self.onRedButtonPressed)
-        buttonLayout.addWidget(btn)
         self.stacklayout.addWidget(Color("red"))
-
-        # set slot for Green button
-        btn = QPushButton("Green")
-        btn.pressed.connect(self.onGreenButtonPressed)
-        buttonLayout.addWidget(btn)
-        self.stacklayout.addWidget(Color("green"))
-
-        # set slot for Blue button
-        btn = QPushButton("Blue")
-        btn.pressed.connect(self.onBlueButtonPressed)
-        buttonLayout.addWidget(btn)
         self.stacklayout.addWidget(Color("blue"))
-
-
-        # set slot for Yellow button
-        btn = QPushButton("Yellow")
-        btn.pressed.connect(self.onYellowButtonPressed)
-        buttonLayout.addWidget(btn)
+        self.stacklayout.addWidget(Color("green"))
         self.stacklayout.addWidget(Color("yellow"))
 
         # set the layout
@@ -82,21 +63,26 @@ class MainWindow(QMainWindow):
         self.stacklayout.setCurrentIndex(3)
 
 
-        # layout = QStackedLayout()
-        # layout.addWidget(Color("red"))
-        # layout.addWidget(Color("green"))
-        # layout.addWidget(Color("blue"))
-        # layout.addWidget(Color("yellow"))
-        #
-        # layout.setCurrentIndex(0)
-        #
-        # container = QWidget()
-        # container.setLayout(layout)
-        # self.setCentralWidget(container)
+    # layout = QStackedLayout()
+    # layout.addWidget(Color("red"))
+    # layout.addWidget(Color("green"))
+    # layout.addWidget(Color("blue"))
+    # layout.addWidget(Color("yellow"))
+    #
+    # layout.setCurrentIndex(0)
+    #
+    # container = QWidget()
+    # container.setLayout(layout)
+    # self.setCentralWidget(container)
 
 app = QApplication(sys.argv)
 
+
 window = MainWindow()
 window.show()
+
+for i in range(1, 5):
+    sleep(1)
+    window.autoFillBackground()
 
 app.exec()
