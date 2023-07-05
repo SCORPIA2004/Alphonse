@@ -64,7 +64,7 @@ class MainWindow(QMainWindow):
         palette.setColor(QPalette.ColorRole.Highlight, QColor("#FF0000"))  # Set the highlighting color
         self.dial.setPalette(palette)
 
-        # add both into box
+        # add widgets to box
         layout = QVBoxLayout()
         layout.addWidget(self.input)
         layout.addWidget(self.label)
