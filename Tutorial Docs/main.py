@@ -77,20 +77,6 @@ class MainWindow(QMainWindow):
         container.setLayout(layout)
 
         self.setCentralWidget(container)
-
-    def valueOfDial(self):
-        self.labelForDial.setText( str(self.dial.value()) )
-
-    def buttonWasReleased(self):
-        self.buttonIsChecked = self.button.isChecked()
-        print(self.buttonIsChecked)
-    def buttonWasClicked(self):
-        print("Changing title...")
-        newWindowTitle = choice(windowTitles)
-        self.setWindowTitle(newWindowTitle)
-        if newWindowTitle == "5":
-            self.button.setDisabled(True)
-            self.button.setText("Disabled")
     def setSizeOfWindow(self):
         screen = app.primaryScreen()
         screenGeometry = screen.geometry()
@@ -102,6 +88,18 @@ class MainWindow(QMainWindow):
         # self.setFixedSize(QSize(960, 540))          # Width, Height
         self.setMinimumSize(QSize(300, 300))          # Width, Height
         self.setMaximumSize(QSize(1000, 1000))        # Width, Height
+    def valueOfDial(self):
+        self.labelForDial.setText( str(self.dial.value()) )
+    def buttonWasReleased(self):
+        self.buttonIsChecked = self.button.isChecked()
+        print(self.buttonIsChecked)
+    def buttonWasClicked(self):
+        print("Changing title...")
+        newWindowTitle = choice(windowTitles)
+        self.setWindowTitle(newWindowTitle)
+        if newWindowTitle == "5":
+            self.button.setDisabled(True)
+            self.button.setText("Disabled")
 
 
 
