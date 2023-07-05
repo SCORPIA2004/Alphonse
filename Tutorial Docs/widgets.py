@@ -74,9 +74,11 @@ class SignInWindow(QMainWindow):
         main_layout.addWidget(sign_in_button)
         main_layout.addWidget(register_button)
 
+        main_widget.setMaximumSize(QSize(300, 300))
+        sign_in_button.setAlignment(Qt.AlignHCenter)
         # Set the main widget as the central widget of the window
         self.setCentralWidget(main_widget)
-        start_color = Qt.black  # Replace with your desired start color
+        start_color = Qt.white  # Replace with your desired start color
         end_color = Qt.blue  # Replace with your desired end color
         self.set_gradient_background(start_color, end_color)
 
