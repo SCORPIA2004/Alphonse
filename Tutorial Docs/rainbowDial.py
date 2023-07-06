@@ -85,8 +85,6 @@ class MainWindow(QMainWindow):
         print("Released!")
 
 
-
-
 app = QApplication(sys.argv)
 
 window = MainWindow()
