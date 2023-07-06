@@ -4,6 +4,6 @@ class Color(QWidget):
   def __init__(self, color):
       super().__init__()
       self.setAutoFillBackground(True)
-      palette = self.palelayout_colorwidget.pytte()
+      palette = self.palette()
       palette.setColor(QPalette.Window, QColor(color))
       self.setPalette(palette)
