@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'TodoListWYSxfG.ui'
+## Form generated from reading UI file 'TodoListTknoGE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.2
 ##
@@ -30,13 +30,18 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.todoList = QListWidget(self.centralwidget)
         self.todoList.setObjectName(u"todoList")
+        self.todoList.setStyleSheet(u"font-size: 20px")
+        self.todoList.setSpacing(20)
+        self.todoList.setGridSize(QSize(30, 30))
+        self.todoList.setUniformItemSizes(False)
+        self.todoList.setSortingEnabled(False)
 
         self.gridLayout.addWidget(self.todoList, 0, 0, 1, 1)
 
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.toggleAllButton = QPushButton(self.centralwidget)
+        self.toggleAllButton.setObjectName(u"toggleAllButton")
 
-        self.gridLayout.addWidget(self.pushButton, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.toggleAllButton, 1, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -54,6 +59,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Toggle All", None))
+        self.toggleAllButton.setText(QCoreApplication.translate("MainWindow", u"Toggle All", None))
     # retranslateUi
 

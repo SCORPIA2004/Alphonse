@@ -16,10 +16,29 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QListWidget" name="todoList"/>
+     <widget class="QListWidget" name="todoList">
+      <property name="styleSheet">
+       <string notr="true">font-size: 20px</string>
+      </property>
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <property name="gridSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="uniformItemSizes">
+       <bool>false</bool>
+      </property>
+      <property name="sortingEnabled">
+       <bool>false</bool>
+      </property>
+     </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="toggleAllButton">
       <property name="text">
        <string>Toggle All</string>
       </property>
