@@ -17,6 +17,14 @@ class MainWindow(QMainWindow):
             item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
             item.setCheckState(Qt.Unchecked)
             self.ui.todoList.addItem(item)
+        self.ui.pushButton.clicked.connect(self.toggleAll)
+
+    def toggleAll(self):
+        for todo in self.ui.todoList.findItems("", Qt.MatchContains):
+            if todo.checkState() == Qt.Checked:
+                todo.setCheckState(Qt.Unchecked)
+            else:
+                todo.setCheckState(Qt.Checked)
 
 
 if __name__ == '__main__':
