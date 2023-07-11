@@ -20,10 +20,12 @@ class MainWindow(QMainWindow):
         self.addToolBar(toolbar)
 
         buttonAction = QAction("My button", self)
-        buttonAction.setStatusTip("This is your button")
+        buttonAction.setStatusTip("Taskbar button was clicked")
         buttonAction.triggered.connect(self.onMyToolBarButtonClick)
         buttonAction.setCheckable(True)
         toolbar.addAction(buttonAction)
+
+        self.setStatusBar(QStatusBar(self))
     def onMyToolBarButtonClick(self,s):
             print("click", s)
 
