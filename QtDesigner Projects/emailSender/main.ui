@@ -73,9 +73,9 @@ QTextEdit {
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
-      <widget class="QWidget" name="page_2">
+      <widget class="QWidget" name="pageSingleOrBatch">
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <widget class="QPushButton" name="pushButtonSingle">
@@ -99,7 +99,7 @@ QTextEdit {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_4">
+      <widget class="QWidget" name="pageUploadFile">
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
          <widget class="QPushButton" name="pushButtonUpload">
@@ -114,9 +114,35 @@ QTextEdit {
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="labelFileName">
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>No file selected</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButtonCompose">
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Compose</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page">
+      <widget class="QWidget" name="pageComposeSingle">
        <widget class="QLineEdit" name="lineEditBody">
         <property name="geometry">
          <rect>
@@ -222,10 +248,10 @@ QTextEdit {
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="page_3">
+      <widget class="QWidget" name="pageSuccessfullySent">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="labelEmailSent">
           <property name="maximumSize">
            <size>
             <width>16777215</width>

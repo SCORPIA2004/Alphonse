@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7ef3b5db-633b-4516-ab2e-b1de0134058e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QtDesigner Projects/TodoList/TodoList.ui" beforeDir="false" afterPath="$PROJECT_DIR$/QtDesigner Projects/TodoList/TodoList.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QtDesigner Projects/emailSender/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/QtDesigner Projects/emailSender/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QtDesigner Projects/emailSender/main.ui" beforeDir="false" afterPath="$PROJECT_DIR$/QtDesigner Projects/emailSender/main.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QtDesigner Projects/emailSender/ui_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/QtDesigner Projects/emailSender/ui_main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +39,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/mshay/Shayan/Portfolio/Nanomagnetics Internship/NanoMagneticsTakeHome/Alphonse/QtDesigner Projects/emailSender",
+    "last_opened_file_path": "C:/Users/mshay/Shayan/Portfolio/NeoStellar/AvASysProject",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -65,14 +67,22 @@
       <workItem from="1689160053919" duration="821000" />
       <workItem from="1689231134570" duration="9000" />
       <workItem from="1689231170207" duration="1063000" />
-      <workItem from="1689316331129" duration="4988000" />
+      <workItem from="1689316331129" duration="10015000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.batch" language="Python" />
+        <watch expression="self.batch " />
+      </configuration>
+    </watches-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Alphonse$main.coverage" NAME="main Coverage Results" MODIFIED="1689321651101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/QtDesigner Projects/emailSender" />
+    <SUITE FILE_PATH="coverage/Alphonse$main.coverage" NAME="main Coverage Results" MODIFIED="1689325669813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/QtDesigner Projects/emailSender" />
   </component>
 </project>
