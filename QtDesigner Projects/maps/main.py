@@ -25,6 +25,16 @@ class MainWindow(QMainWindow):
             location=coordinate
         )
 
+        m = folium.Marker(
+            location=coordinate,
+            popup="Bilkent Hill",
+            tooltip="Bilkent Hill",
+            icon=folium.Icon(color="green", icon="leaf")
+        ).add_to(m)
+        forLatLng = folium.ClickForLatLng().add_to(m)
+        # m = folium.ClickForMarker().add_to(m)
+        marker = folium.ClickForMarker("<b>Lat:</b> ${lat}<br /><b>Lon:</b> ${lng}")
+        m.add_child(marker)
         # save map data
         data = io.BytesIO()
         m.save(data, close_file=False)
