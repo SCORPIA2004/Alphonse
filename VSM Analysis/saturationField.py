@@ -4,7 +4,7 @@ from kneed import KneeLocator
 from scipy.signal import savgol_filter
 import csv
 
-def movingAverageSmoothing(x, y_noisy, gradient):
+def movingAverageSmoothing(x, y_noisy):
     # Generate sample noisy data
 
     # Smoothing parameters
@@ -16,8 +16,9 @@ def movingAverageSmoothing(x, y_noisy, gradient):
     y_smoothed_ma = np.convolve(y_noisy, np.ones(window_size_ma)/window_size_ma, mode='same')
 
     # Apply Savitzky-Golay filter
-    y_smoothed_sg = savgol_filter(y_noisy, window_size_sg, poly_order_sg)
+    # y_smoothed_sg = savgol_filter(y_noisy, window_size_sg, poly_order_sg)
     # plotGraph(x, gradient, "Gradient")
+    return y_smoothed_ma
 
 def computeArea(pos):
     x, y = (zip(*pos))
@@ -37,7 +38,7 @@ def areaEnclosed(xAxis, yAxis):
     area = 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
 
 
-    print("Area: ", area)
+    # print("Area: ", area)
     return area
 
 def plotGraph(x, y, title, saturationPoint=0):
@@ -54,8 +55,12 @@ def plotGraph(x, y, title, saturationPoint=0):
     computeArea(polygon[0].xy)
     # areaEnclosed(x, y, polygon)
 
-    # plt.xlim(5000, 7500)
+    # plt.xlim(-30, 30)
     # plt.ylim(-2, 2)
+
+    # make x axis line
+    # plt.axhline(y=0, color='k')
+
 
     plt.xlabel('X-axis')
     plt.ylabel('Y-axis')
@@ -105,14 +110,15 @@ def saturationField(xAxis, yAxis):
     # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
-    print(round(saturationPointX, 3))
+    # print(round(saturationPointX, 3))
     # find x value closest to saturationPointX
     saturationPointX = min(xAxisArr, key=lambda x:abs(x-saturationPointX))
-    print("Closest x:  ", saturationPointX)
+    # print("Closest x:  ", saturationPointX)
     # find index of saturationPointX
     index = np.where(xAxisArr == saturationPointX)[0].item() + 1
-    print("Index: ", index)
+    # print("Index: ", index)
     saturationPointY = yAxisArr[index]
+    # print("Saturation field: ", saturationPointY)
     return saturationPointY
 
 def saturationPoint(xAxis, yAxis):
@@ -126,13 +132,13 @@ def saturationPoint(xAxis, yAxis):
     # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
-    print(round(saturationPointX, 3))
+    # print(round(saturationPointX, 3))
     # find x value closest to saturationPointX
     saturationPointX = min(xAxisArr, key=lambda x:abs(x-saturationPointX))
-    print("Closest x:  ", saturationPointX)
+    # print("Closest x:  ", saturationPointX)
     # find index of saturationPointX
     index = np.where(xAxisArr == saturationPointX)[0].item() + 1
-    print("Index: ", index)
+    # print("Index: ", index)
 
 
     return saturationPointX
@@ -143,8 +149,42 @@ def slopeAtCoerciveField(xAxis, yAxis):
 
     gradientArr = calculate_gradients(xAxisArr, yAxisArr)
     maxGradient = gradientArr.max()
-    print("slope at coercive field: ", maxGradient)
+    # print("slope at coercive field: ", maxGradient)
     return maxGradient
+
+def sfd(xAxis, yAxis):
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
+    gradArr = calculate_gradients(xAxisArr, yAxisArr)
+
+    # max of gradArr
+    maxGrad = gradArr.max()
+    # print("maxGrad: ", maxGrad)
+    halfGrad = maxGrad / 2
+
+    # find grad value closest to halfGrad
+    halfGrad = min(gradArr, key=lambda x:abs(x-halfGrad))
+    # print("Closest gradient to the half:  ", halfGrad)
+
+    # find index of halfGrad
+    indexOfHalfGrad = np.where(gradArr == halfGrad)[0].item() + 1
+    # print("Index: ", index)
+    # print("x value: ", xAxisArr[index])
+
+    widthOfHalfMaxGradient = indexOfHalfGrad * 2
+
+    # find x value where curve intersects x axis
+    # find x value where y value is closest to 0
+    indexHc = (np.abs(yAxisArr - 0)).argmin()
+    hc = xAxisArr[indexHc]
+    print("Index: ", indexHc)
+    print("Closest y to 0:  ", hc)
+    sfdValue = widthOfHalfMaxGradient / hc
+    print("SFD: ", sfdValue)
+    return sfdValue
+
+
+
 
 
 def main():
@@ -182,8 +222,15 @@ def main():
     # yAxis = yAxis[:-1]
 
     saturationPointVal = saturationPoint(xAxis, yAxis)
-    print("Saturation point: ", saturationPointVal)
+    # print("Saturation point: ", saturationPointVal)
     plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
+    # plot the gradient
+    # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPointVal)
+
     slopeAtCoerciveField(xAxis, yAxis)
+    saturationPoint(xAxis, yAxis)
+    saturationField(xAxis, yAxis)
+    sfd(xAxis, yAxis)
+
 if __name__ == '__main__':
         main()
