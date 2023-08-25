@@ -19,6 +19,8 @@ def movingAverageSmoothing(x, y_noisy, gradient):
     y_smoothed_sg = savgol_filter(y_noisy, window_size_sg, poly_order_sg)
     # plotGraph(x, gradient, "Gradient")
 
+
+
 def plotGraph(x, y, title, knee=0):
     # Plot the results
     plt.figure(figsize=(10, 6))
@@ -35,6 +37,7 @@ def plotGraph(x, y, title, knee=0):
     plt.legend()
     plt.grid(True)
     plt.show()
+
 
 def calculate_gradients(x, y):
     # Convert input arrays to numpy arrays
@@ -55,6 +58,7 @@ def calculate_gradients(x, y):
 
     return gradients
 
+
 def largest(arr, n):
     # Initialize maximum element
     max = arr[0]
@@ -68,48 +72,50 @@ def largest(arr, n):
     return max
 
 
-def saturationPoint(xAxis, yAxis):
+
+def main():
     # Initialize empty arrays to store the data
-    # column1 = []
-    # column2 = []
+    column1 = []
+    column2 = []
 
-    # # Specify the path to your CSV file
-    # # csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
-    # # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
-    # # csv_file_path = 'sample1.csv'  # Update with the actual file path
-    # # csv_file_path = 'sample3.csv'  # Update with the actual file path
+    # Specify the path to your CSV file
+    csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
+    # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
+    # csv_file_path = 'sample1.csv'  # Update with the actual file path
+    # csv_file_path = 'sample3.csv'  # Update with the actual file path
 
-    # # Open and read the CSV file
-    # with open(csv_file_path, 'r') as csv_file:
-    #     csv_reader = csv.reader(csv_file)
-    #     # waste first row
-    #     next(csv_reader)
+    # Open and read the CSV file
+    with open(csv_file_path, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        # waste first row
+        next(csv_reader)
 
-    #     # Iterate through each row in the CSV file
-    #     for row in csv_reader:
-    #         # Assuming the first two columns contain the data you want to store
-    #         if len(row) >= 2:
-    #             column1.append(float(row[0]))  # Convert to float if necessary
-    #             column2.append(float(row[1]))  # Convert to float if necessary
+        # Iterate through each row in the CSV file
+        for row in csv_reader:
+            # Assuming the first two columns contain the data you want to store
+            if len(row) >= 2:
+                column1.append(float(row[0]))  # Convert to float if necessary
+                column2.append(float(row[1]))  # Convert to float if necessary
 
-    # # Now smooth the curve using moving average
+    # Now smooth the curve using moving average
+    xAxis = np.array(column1)
+    yAxis = np.array(column2)
 
-    # gradArr = calculate_gradients(xAxis, yAxis)
-    # # remove the last value from xAxis and yAxis
-    # xAxis = xAxis[:-1]
-    # yAxis = yAxis[:-1]
+
+    gradArr = calculate_gradients(xAxis, yAxis)
+    # remove the last value from xAxis and yAxis
+    xAxis = xAxis[:-1]
+    yAxis = yAxis[:-1]
 
     # plotGraph(xAxis, gradArr, "Gradient kneed")
-    # print(gradArr.size)
+    print(gradArr.size)
 
-    xAxisArr = np.array(xAxis)
-    yAxisArr = np.array(yAxis)
-
-    kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
-    saturationPoint = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
-    kneedle.knee = saturationPoint
-    # plotGraph(xAxisArr, yAxisArr,"Hysteresis kneed", knee=kneedle.knee)
+    kneedle = KneeLocator(xAxis, yAxis, S=1.0, curve="concave", direction="increasing")
+    kneedle.knee = kneedle.knee + largest(xAxis, xAxis.size) / 3
+    plotGraph(xAxis, yAxis,"Hysteresis kneed", knee=kneedle.knee)
     # plotGraph(xAxis, gradArr,"Gradient", knee=kneedle.knee)
     print(round(kneedle.knee, 3))
 
-    return saturationPoint
+
+if __name__ == '__main__':
+    main()
