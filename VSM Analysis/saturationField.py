@@ -177,13 +177,24 @@ def sfd(xAxis, yAxis):
     # find x value where y value is closest to 0
     indexHc = (np.abs(yAxisArr - 0)).argmin()
     hc = xAxisArr[indexHc]
-    print("Index: ", indexHc)
-    print("Closest y to 0:  ", hc)
+    # print("Index: ", indexHc)
+    # print("Closest y to 0:  ", hc)
     sfdValue = widthOfHalfMaxGradient / hc
-    print("SFD: ", sfdValue)
+    # print("SFD: ", sfdValue)
     return sfdValue
 
 
+def initialSlope(xAxis, yAxis):
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
+    gradArr = calculate_gradients(xAxisArr, yAxisArr)
+
+    # find index when xAxisArr element is closest to 0
+    index = (np.abs(xAxisArr - 0)).argmin() + 1
+    print("Index: ", index)
+    initialSlopeValue = gradArr[index]
+    print("Initial slope is ", initialSlopeValue)
+    return initialSlopeValue
 
 
 
@@ -231,6 +242,7 @@ def main():
     saturationPoint(xAxis, yAxis)
     saturationField(xAxis, yAxis)
     sfd(xAxis, yAxis)
+    initialSlope(xAxis, yAxis)
 
 if __name__ == '__main__':
         main()
