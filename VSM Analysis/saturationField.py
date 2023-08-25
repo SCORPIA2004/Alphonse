@@ -95,20 +95,47 @@ def largest(arr, n):
             max = arr[i]
     return max
 
+def saturationField(xAxis, yAxis):
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
+
+    kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
+    saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
+
+    # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
+    gradArr = calculate_gradients(xAxisArr, yAxisArr)
+    # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
+    print(round(saturationPointX, 3))
+    # find x value closest to saturationPointX
+    saturationPointX = min(xAxisArr, key=lambda x:abs(x-saturationPointX))
+    print("Closest x:  ", saturationPointX)
+    # find index of saturationPointX
+    index = np.where(xAxisArr == saturationPointX)[0].item() + 1
+    print("Index: ", index)
+    saturationPointY = yAxisArr[index]
+    return saturationPointY
+
 def saturationPoint(xAxis, yAxis):
 
     xAxisArr = np.array(xAxis)
     yAxisArr = np.array(yAxis)
 
     kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
-    saturationPoint = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
+    saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
 
     # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
-    print(round(kneedle.knee, 3))
+    print(round(saturationPointX, 3))
+    # find x value closest to saturationPointX
+    saturationPointX = min(xAxisArr, key=lambda x:abs(x-saturationPointX))
+    print("Closest x:  ", saturationPointX)
+    # find index of saturationPointX
+    index = np.where(xAxisArr == saturationPointX)[0].item() + 1
+    print("Index: ", index)
 
-    return saturationPoint
+
+    return saturationPointX
 
 def slopeAtCoerciveField(xAxis, yAxis):
     xAxisArr = np.array(xAxis)
@@ -116,17 +143,6 @@ def slopeAtCoerciveField(xAxis, yAxis):
 
     gradientArr = calculate_gradients(xAxisArr, yAxisArr)
     maxGradient = gradientArr.max()
-    print("slope at coercive field: ", maxGradient)
-    return maxGradient
-
-def coreciveField(xAxis, yAxis):
-    xAxisArr = np.array(xAxis)
-    yAxisArr = np.array(yAxis)
-
-    gradientArr = calculate_gradients(xAxisArr, yAxisArr)
-
-    maxGradient = gradientArr.max()
-
     print("slope at coercive field: ", maxGradient)
     return maxGradient
 
@@ -168,6 +184,6 @@ def main():
     saturationPointVal = saturationPoint(xAxis, yAxis)
     print("Saturation point: ", saturationPointVal)
     plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
-
+    slopeAtCoerciveField(xAxis, yAxis)
 if __name__ == '__main__':
         main()
