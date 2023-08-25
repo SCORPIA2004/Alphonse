@@ -25,8 +25,8 @@ def computeArea(pos):
 
 def areaEnclosed(xAxis, yAxis):
     # Plot the results
-    xAxisArr = np.array(xAxis)
-    yAxisArr = np.array(yAxis)
+    x = np.array(xAxis)
+    y = np.array(yAxis)
 
     plt.figure(figsize=(10, 6))
     plt.plot(x, y, label='Hysteresis', linewidth=2)
