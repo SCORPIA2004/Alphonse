@@ -23,8 +23,11 @@ def computeArea(pos):
     x, y = (zip(*pos))
     return 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
 
-def areaEnclosed(x, y):
+def areaEnclosed(xAxis, yAxis):
     # Plot the results
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
+
     plt.figure(figsize=(10, 6))
     plt.plot(x, y, label='Hysteresis', linewidth=2)
     # plot a vertical line at the knee
