@@ -24,7 +24,9 @@ def computeArea(pos):
     return 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
 
 def areaEnclosed(x, y, polygon):
-    print("Area: ", computeArea(polygon[0].xy))
+    area = computeArea(polygon[0].xy)
+    print("Area: ", area)
+    return area
 
 def plotGraph(x, y, title, saturationPoint=0):
     # Plot the results
@@ -37,6 +39,7 @@ def plotGraph(x, y, title, saturationPoint=0):
     # index = np.where(x == x.max())[0].item()
     # polygon = plt.fill(x[index:], y[index:], 'b', alpha=0.3)
     polygon = plt.fill(x, y, 'b', alpha=0.3)
+
     areaEnclosed(x, y, polygon)
 
     plt.xlim(-2000, 2000)
