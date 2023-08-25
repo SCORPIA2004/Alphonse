@@ -23,6 +23,8 @@ def computeArea(pos):
     x, y = (zip(*pos))
     return 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
 
+def areaEnclosed(x, y, polygon):
+    print("Area: ", computeArea(polygon[0].xy))
 
 def plotGraph(x, y, title, saturationPoint=0):
     # Plot the results
@@ -34,9 +36,8 @@ def plotGraph(x, y, title, saturationPoint=0):
 
     # index = np.where(x == x.max())[0].item()
     # polygon = plt.fill(x[index:], y[index:], 'b', alpha=0.3)
-
     polygon = plt.fill(x, y, 'b', alpha=0.3)
-    print("Area: ", computeArea(polygon[0].xy))
+    areaEnclosed(x, y, polygon)
 
     plt.xlim(-2000, 2000)
     plt.ylim(-2, 2)
@@ -140,6 +141,7 @@ def main():
     # yAxis = yAxis[:-1]
 
     saturationPointVal = saturationPoint(xAxis, yAxis)
+    print("Saturation point: ", saturationPointVal)
     plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
 
 if __name__ == '__main__':
