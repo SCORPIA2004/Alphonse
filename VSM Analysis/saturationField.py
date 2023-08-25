@@ -51,11 +51,11 @@ def plotGraph(x, y, title, saturationPoint=0):
     # index = np.where(x == x.max())[0].item()
     # polygon = plt.fill(x[index:], y[index:], 'b', alpha=0.3)
     polygon = plt.fill(x, y, 'b', alpha=0.3)
+    computeArea(polygon[0].xy)
+    # areaEnclosed(x, y, polygon)
 
-    areaEnclosed(x, y, polygon)
-
-    plt.xlim(-2000, 2000)
-    plt.ylim(-2, 2)
+    # plt.xlim(5000, 7500)
+    # plt.ylim(-2, 2)
 
     plt.xlabel('X-axis')
     plt.ylabel('Y-axis')
@@ -119,7 +119,16 @@ def slopeAtCoerciveField(xAxis, yAxis):
     print("slope at coercive field: ", maxGradient)
     return maxGradient
 
+def coreciveField(xAxis, yAxis):
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
 
+    gradientArr = calculate_gradients(xAxisArr, yAxisArr)
+
+    maxGradient = gradientArr.max()
+
+    print("slope at coercive field: ", maxGradient)
+    return maxGradient
 
 
 def main():
@@ -132,6 +141,7 @@ def main():
     # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
     # csv_file_path = 'sample1.csv'  # Update with the actual file path
     # csv_file_path = 'sample3.csv'  # Update with the actual file path
+    # csv_file_path = 'sample4.csv'  # Update with the actual file path
 
     # Open and read the CSV file
     with open(csv_file_path, 'r') as csv_file:
