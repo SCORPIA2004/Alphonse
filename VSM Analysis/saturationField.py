@@ -30,14 +30,13 @@ def areaEnclosed(xAxis, yAxis):
 
     plt.figure(figsize=(10, 6))
     plt.plot(x, y, label='Hysteresis', linewidth=2)
-    # plot a vertical line at the knee
-    if saturationPoint != 0:
-        plt.vlines(saturationPoint, plt.ylim()[0], plt.ylim()[1], linestyles='dashed', colors='r', label='Saturation point')
-
-    # index = np.where(x == x.max())[0].item()
-    # polygon = plt.fill(x[index:], y[index:], 'b', alpha=0.3)
     polygon = plt.fill(x, y, 'b', alpha=0.3)
-    area = computeArea(polygon[0].xy)
+    # area = computeArea(polygon[0].xy)
+    pos = polygon[0].xy
+    x, y = (zip(*pos))
+    area = 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
+
+
     print("Area: ", area)
     return area
 
