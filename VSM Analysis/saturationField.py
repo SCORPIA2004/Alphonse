@@ -87,9 +87,9 @@ def saturationPoint(xAxis, yAxis):
     kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
     saturationPoint = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
 
-    plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
+    # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
-    plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
+    # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
     print(round(kneedle.knee, 3))
 
     return saturationPoint
@@ -142,7 +142,5 @@ def main():
     saturationPointVal = saturationPoint(xAxis, yAxis)
     plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
 
-
-
 if __name__ == '__main__':
-    main()
+        main()
