@@ -204,8 +204,8 @@ def main():
     column2 = []
 
     # Specify the path to your CSV file
-    csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
-    # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
+    # csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
+    csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
     # csv_file_path = 'sample1.csv'  # Update with the actual file path
     # csv_file_path = 'sample3.csv'  # Update with the actual file path
     # csv_file_path = 'sample4.csv'  # Update with the actual file path
