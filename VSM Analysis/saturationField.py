@@ -219,8 +219,6 @@ def rigidField(xAxis, yAxis):
     # xAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 0)
     # yAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 1)
 
-
-
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
 
     # find index when xAxisArr element is closest to 0
@@ -236,10 +234,9 @@ def rigidField(xAxis, yAxis):
     print("Gradient: ", gradient)
     c = y2 - gradient * x2
     print("c: ", c)
+    print("Remanent magnetization: ", c)
 
-
-    # print("Remanent magnetization: ", rf)
-    return
+    return c
     # xAxisArr = np.array(xAxis)
     # yAxisArr = np.array(yAxis)
     # gradArr = calculate_gradients(xAxisArr, yAxisArr)
