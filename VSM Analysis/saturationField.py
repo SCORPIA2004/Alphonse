@@ -1,8 +1,16 @@
+from tkinter import Tk
+
 import numpy as np
 import matplotlib.pyplot as plt
 from kneed import KneeLocator
+from matplotlib.backends._backend_tk import NavigationToolbar2Tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 from scipy.signal import savgol_filter
 import csv
+import tkinter as tk
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 def movingAverageSmoothing(x, y_noisy):
     # Generate sample noisy data
@@ -204,6 +212,7 @@ def rigidField(xAxis, yAxis):
     index = (np.abs(xAxisArr - 0)).argmin() + 1
     print("Index: ", index)
     rf = xAxisArr[index]
+    print("Rigid field: ", rf)
     return rf
 
 def remMag(xAxis, yAxis):
@@ -215,10 +224,46 @@ def remMag(xAxis, yAxis):
     index = (np.abs(xAxisArr - 0)).argmin() + 1
     print("Index: ", index)
     rf = yAxisArr[index]
+    print("Remanent magnetization: ", rf)
     return rf
 
 
+class PlotterApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Tkinter Plotter")
+
+        self.xdata = []
+        self.ydata = []
+
+        self.figure = Figure(figsize=(5, 4), dpi=100)
+        self.plot = self.figure.add_subplot(1, 1, 1)
+
+        self.canvas = FigureCanvasTkAgg(self.figure, master=root)
+        self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        self.toolbar = NavigationToolbar2Tk(self.canvas, root)
+        self.toolbar.update()
+        self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        self.plot_button = tk.Button(root, text="Plot", command=self.plot_graph)
+        self.plot_button.pack(side=tk.BOTTOM)
+
+    def plot_graph(self):
+        self.plot.clear()
+        self.plot.plot(self.xdata, self.ydata, marker='o')
+        self.plot.set_xlabel("X Axis")
+        self.plot.set_ylabel("Y Axis")
+        self.plot.set_title("Plot")
+        self.canvas.draw()
+
+    def set_data(self, xdata, ydata):
+        self.xdata = xdata
+        self.ydata = ydata
 def main():
+    root = Tk()
+    app = PlotterApp(root)
+
     # Initialize empty arrays to store the data
     column1 = []
     column2 = []
@@ -247,6 +292,8 @@ def main():
     xAxis = np.array(column1)
     yAxis = np.array(column2)
 
+    app.set_data(xAxis, yAxis)
+
     gradArr = calculate_gradients(xAxis, yAxis)
     # remove the last value from xAxis and yAxis
     # xAxis = xAxis[:-1]
@@ -254,7 +301,7 @@ def main():
 
     saturationPointVal = saturationPoint(xAxis, yAxis)
     print("Saturation point: ", saturationPointVal)
-    plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
+    # plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
     # plot the gradient
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPointVal)
 
@@ -263,6 +310,9 @@ def main():
     saturationField(xAxis, yAxis)
     sfd(xAxis, yAxis)
     initialSlope(xAxis, yAxis)
+    remMag(xAxis, yAxis)
+    rigidField(xAxis, yAxis)
+    root.mainloop()
 
 if __name__ == '__main__':
         main()
