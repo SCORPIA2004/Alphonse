@@ -213,14 +213,43 @@ def initialSlope(xAxis, yAxis):
 def rigidField(xAxis, yAxis):
     xAxisArr = np.array(xAxis)
     yAxisArr = np.array(yAxis)
+    # xAxisArrOld = np.array(xAxis)
+    # yAxisArrOld = np.array(yAxis)
+    #
+    # xAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 0)
+    # yAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 1)
+
+
+
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
 
     # find index when xAxisArr element is closest to 0
-    index = (np.abs(xAxisArr - 0)).argmin() + 1
+    index = (np.abs(xAxisArr - 0)).argmin()
     print("Index: ", index)
-    rf = xAxisArr[index]
-    print("Rigid field: ", rf)
-    return rf
+    y2 = yAxisArr[index]
+    y1 = yAxisArr[index + 1]
+    print("Point y2: ", y2, "Point y1: ", y1)
+    x2 = xAxisArr[index]
+    x1 = xAxisArr[index + 1]
+    print("Point x2: ", x2, "Point x1: ", x1)
+    gradient = (y2 - y1) / (x2 - x1)
+    print("Gradient: ", gradient)
+    c = y2 - gradient * x2
+    print("c: ", c)
+
+
+    # print("Remanent magnetization: ", rf)
+    return
+    # xAxisArr = np.array(xAxis)
+    # yAxisArr = np.array(yAxis)
+    # gradArr = calculate_gradients(xAxisArr, yAxisArr)
+    #
+    # # find index when xAxisArr element is closest to 0
+    # index = (np.abs(xAxisArr - 0)).argmin() + 1
+    # print("Index: ", index)
+    # rf = xAxisArr[index]
+    # print("Rigid field: ", rf)
+    # return rf
 
 def remMag(xAxis, yAxis):
     xAxisArr = np.array(xAxis)
@@ -301,8 +330,8 @@ def main():
     column2 = []
 
     # Specify the path to your CSV file
-    csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
-    # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
+    # csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
+    csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
     # csv_file_path = 'sample1.csv'  # Update with the actual file path
     # csv_file_path = 'sample3.csv'  # Update with the actual file path
     # csv_file_path = 'sample4.csv'  # Update with the actual file path
