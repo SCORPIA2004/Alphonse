@@ -110,7 +110,7 @@ def saturationField(xAxis, yAxis):
     # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
-    # print(round(saturationPointX, 3))
+    print(round(saturationPointX, 3))
     # find x value closest to saturationPointX
     saturationPointX = min(xAxisArr, key=lambda x:abs(x-saturationPointX))
     # print("Closest x:  ", saturationPointX)
@@ -118,7 +118,7 @@ def saturationField(xAxis, yAxis):
     index = np.where(xAxisArr == saturationPointX)[0].item() + 1
     # print("Index: ", index)
     saturationPointY = yAxisArr[index]
-    # print("Saturation field: ", saturationPointY)
+    print("Saturation field: ", saturationPointY)
     return saturationPointY
 
 def saturationPoint(xAxis, yAxis):
@@ -149,7 +149,7 @@ def slopeAtCoerciveField(xAxis, yAxis):
 
     gradientArr = calculate_gradients(xAxisArr, yAxisArr)
     maxGradient = gradientArr.max()
-    # print("slope at coercive field: ", maxGradient)
+    print("slope at coercive field: ", maxGradient)
     return maxGradient
 
 def sfd(xAxis, yAxis):
@@ -180,9 +180,8 @@ def sfd(xAxis, yAxis):
     # print("Index: ", indexHc)
     # print("Closest y to 0:  ", hc)
     sfdValue = widthOfHalfMaxGradient / hc
-    # print("SFD: ", sfdValue)
+    print("SFD: ", sfdValue)
     return sfdValue
-
 
 def initialSlope(xAxis, yAxis):
     xAxisArr = np.array(xAxis)
@@ -196,6 +195,27 @@ def initialSlope(xAxis, yAxis):
     print("Initial slope is ", initialSlopeValue)
     return initialSlopeValue
 
+def rigidField(xAxis, yAxis):
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
+    gradArr = calculate_gradients(xAxisArr, yAxisArr)
+
+    # find index when xAxisArr element is closest to 0
+    index = (np.abs(xAxisArr - 0)).argmin() + 1
+    print("Index: ", index)
+    rf = xAxisArr[index]
+    return rf
+
+def remMag(xAxis, yAxis):
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
+    gradArr = calculate_gradients(xAxisArr, yAxisArr)
+
+    # find index when xAxisArr element is closest to 0
+    index = (np.abs(xAxisArr - 0)).argmin() + 1
+    print("Index: ", index)
+    rf = yAxisArr[index]
+    return rf
 
 
 def main():
@@ -204,8 +224,8 @@ def main():
     column2 = []
 
     # Specify the path to your CSV file
-    # csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
-    csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
+    csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
+    # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
     # csv_file_path = 'sample1.csv'  # Update with the actual file path
     # csv_file_path = 'sample3.csv'  # Update with the actual file path
     # csv_file_path = 'sample4.csv'  # Update with the actual file path
@@ -233,7 +253,7 @@ def main():
     # yAxis = yAxis[:-1]
 
     saturationPointVal = saturationPoint(xAxis, yAxis)
-    # print("Saturation point: ", saturationPointVal)
+    print("Saturation point: ", saturationPointVal)
     plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
     # plot the gradient
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPointVal)
