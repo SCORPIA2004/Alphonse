@@ -74,7 +74,8 @@ def plotGraph(x, y, title, saturationPoint=0):
     # plt.ylim(-2, 2)
 
     # make x axis line
-    # plt.axhline(y=0, color='k')
+    plt.axhline(y=0, color='k')
+    plt.axvline(x=0, color='k')
 
 
     plt.xlabel('X-axis')
@@ -120,9 +121,10 @@ def saturationField(xAxis, yAxis):
     yAxisArr = np.array(yAxis)
 
     kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
-    saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
+    saturationPointX = kneedle.knee + kneedle.knee / 2
+    # saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
 
-    # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
+    plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPointX)
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
     print(round(saturationPointX, 3))
@@ -312,6 +314,8 @@ class PlotterApp:
         self.plot.set_ylabel("Y Axis")
         self.plot.set_title("Plot")
         self.plot.grid(True)
+        self.plot.axhline(y=0, color='k')
+        self.plot.axvline(x=0, color='k')
 
         self.canvas.draw()
 
@@ -327,8 +331,8 @@ def main():
     column2 = []
 
     # Specify the path to your CSV file
-    # csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
-    csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
+    csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
+    # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
     # csv_file_path = 'sample1.csv'  # Update with the actual file path
     # csv_file_path = 'sample3.csv'  # Update with the actual file path
     # csv_file_path = 'sample4.csv'  # Update with the actual file path
