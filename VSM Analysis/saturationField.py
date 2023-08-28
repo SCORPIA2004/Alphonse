@@ -12,7 +12,7 @@ import tkinter as tk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-def movingAverageSmoothing(x, y_noisy):
+def movingAverageSmoothing(x, y, type):
     # Generate sample noisy data
 
     # Smoothing parameters
@@ -20,13 +20,20 @@ def movingAverageSmoothing(x, y_noisy):
     window_size_sg = 7  # Savitzky-Golay window size
     poly_order_sg = 3   # Savitzky-Golay polynomial order
 
+    x_noisy = np.array(x)
+    y_noisy = np.array(y)
+
     # Apply moving average filter
-    y_smoothed_ma = np.convolve(y_noisy, np.ones(window_size_ma)/window_size_ma, mode='same')
+    if type == 1:
+        smoothed_ma = np.convolve(y_noisy, np.ones(window_size_ma)/window_size_ma, mode='same')
+    else:
+        smoothed_ma = np.convolve(x_noisy, np.ones(window_size_ma)/window_size_ma, mode='same')
+
 
     # Apply Savitzky-Golay filter
     # y_smoothed_sg = savgol_filter(y_noisy, window_size_sg, poly_order_sg)
     # plotGraph(x, gradient, "Gradient")
-    return y_smoothed_ma
+    return smoothed_ma
 
 def computeArea(pos):
     x, y = (zip(*pos))
@@ -218,14 +225,33 @@ def rigidField(xAxis, yAxis):
 def remMag(xAxis, yAxis):
     xAxisArr = np.array(xAxis)
     yAxisArr = np.array(yAxis)
+    # xAxisArrOld = np.array(xAxis)
+    # yAxisArrOld = np.array(yAxis)
+    #
+    # xAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 0)
+    # yAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 1)
+
+
+
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
 
     # find index when xAxisArr element is closest to 0
-    index = (np.abs(xAxisArr - 0)).argmin() + 1
+    index = (np.abs(xAxisArr - 0)).argmin()
     print("Index: ", index)
-    rf = yAxisArr[index]
-    print("Remanent magnetization: ", rf)
-    return rf
+    y2 = yAxisArr[index]
+    y1 = yAxisArr[index + 1]
+    print("Point y2: ", y2, "Point y1: ", y1)
+    x2 = xAxisArr[index]
+    x1 = xAxisArr[index + 1]
+    print("Point x2: ", x2, "Point x1: ", x1)
+    gradient = (y2 - y1) / (x2 - x1)
+    print("Gradient: ", gradient)
+    c = y2 - gradient * x2
+    print("c: ", c)
+
+
+    # print("Remanent magnetization: ", rf)
+    return c
 
 
 class PlotterApp:
@@ -249,12 +275,18 @@ class PlotterApp:
         self.plot_button = tk.Button(root, text="Plot", command=self.plot_graph)
         self.plot_button.pack(side=tk.BOTTOM)
 
+
+
+
     def plot_graph(self):
         self.plot.clear()
         self.plot.plot(self.xdata, self.ydata, marker='o')
+
         self.plot.set_xlabel("X Axis")
         self.plot.set_ylabel("Y Axis")
         self.plot.set_title("Plot")
+        self.plot.grid(True)
+
         self.canvas.draw()
 
     def set_data(self, xdata, ydata):
@@ -291,6 +323,8 @@ def main():
     # Now smooth the curve using moving average
     xAxis = np.array(column1)
     yAxis = np.array(column2)
+
+
 
     app.set_data(xAxis, yAxis)
 
