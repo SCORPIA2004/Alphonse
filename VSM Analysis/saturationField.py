@@ -45,7 +45,7 @@ def areaEnclosed(xAxis, yAxis):
     y = np.array(yAxis)
 
     plt.figure(figsize=(10, 6))
-    plt.plot(x, y, label='Hysteresis', linewidth=2)
+    # plt.plot(x, y, label='Hysteresis', linewidth=2)
     polygon = plt.fill(x, y, 'b', alpha=0.3)
     # area = computeArea(polygon[0].xy)
     pos = polygon[0].xy
@@ -121,18 +121,19 @@ def saturationField(xAxis, yAxis):
     #### OLD CODE working with offset = kneedle.knee + kneedle.knee / 2
     xAxisArr = np.array(xAxis)
     yAxisArr = np.array(yAxis)
-    kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
-    saturationPointX = kneedle.knee + kneedle.knee / 2
-    # saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
-
-    gradArr = calculate_gradients(xAxisArr, yAxisArr)
-    plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPointX)
-    # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
-    print(round(saturationPointX, 3))
-    # find x value closest to saturationPointX
-    saturationPointX = min(xAxisArr, key=lambda x:abs(x-saturationPointX))
-    # print("Closest x:  ", saturationPointX)
-    # find index of saturationPointX
+    # kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
+    # saturationPointX = kneedle.knee + kneedle.knee / 2
+    # # saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
+    #
+    # gradArr = calculate_gradients(xAxisArr, yAxisArr)
+    # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPointX)
+    # # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
+    # print(round(saturationPointX, 3))
+    # # find x value closest to saturationPointX
+    # saturationPointX = min(xAxisArr, key=lambda x:abs(x-saturationPointX))
+    # # print("Closest x:  ", saturationPointX)
+    # # find index of saturationPointX
+    saturationPointX = saturationPoint(xAxis, yAxis)
     index = np.where(xAxisArr == saturationPointX)[0].item() + 1
     # print("Index: ", index)
     saturationPointY = yAxisArr[index]
@@ -251,6 +252,17 @@ def rigidField(xAxis, yAxis):
     # print("Rigid field: ", rf)
     # return rf
 
+def coerciveField(xAxis, yAxis):
+    xAxisArr = np.array(xAxis)
+    yAxisArr = np.array(yAxis)
+
+    # find index when xAxisArr element is closest to 0
+    index = (np.abs(yAxisArr - 0)).argmin()
+    print("Index: ", index)
+    coerciveField = xAxisArr[index]
+    print("Coercive field: ", coerciveField)
+    return coerciveField
+
 def remMag(xAxis, yAxis):
     xAxisArr = np.array(xAxis)
     yAxisArr = np.array(yAxis)
@@ -284,7 +296,12 @@ def remMag(xAxis, yAxis):
 
 
 class PlotterApp:
-    def __init__(self, root):
+    def __init__(self, root, saturationPointX=0, saturationPointY=0, nucleationField=0, remMag=0, coerciveField=0):
+        self.saturationPointX = saturationPointX
+        self.saturationPointY = saturationPointY
+        self.nucleationField = nucleationField
+        self.coerciveField = coerciveField
+        self.remMag = remMag
         self.root = root
         self.root.title("Tkinter Plotter")
 
@@ -307,9 +324,9 @@ class PlotterApp:
 
 
 
-    def plot_graph(self):
+    def plot_graph(self, saturationPoint=0):
         self.plot.clear()
-        self.plot.plot(self.xdata, self.ydata, marker='o')
+        self.plot.plot(self.xdata, self.ydata, marker='.', linewidth=1, markersize=1)
 
         self.plot.set_xlabel("X Axis")
         self.plot.set_ylabel("Y Axis")
@@ -317,6 +334,15 @@ class PlotterApp:
         self.plot.grid(True)
         self.plot.axhline(y=0, color='k')
         self.plot.axvline(x=0, color='k')
+        # self.plot.axvline(x=self.saturationPointX, color='r', linestyle='dashed', label='Ms')
+        # self.plot.axhline(y=self.saturationPointY, color='g', linestyle='dashed', label='Hs')
+        self.plot.scatter(self.saturationPointX, self.saturationPointY, color='r', marker='^', label='Ms')
+        # self.plot.scatter(0, self.remMag, color='g', marker='^', label='Mr')
+        # self.plot.scatter(self.coerciveField, 0, color='b', marker='^', label='Hc')
+        # self.plot.axvline(x=self.nucleationField, color='k', linestyle='dashed', label='Hn')
+
+
+        self.plot.legend()
 
         self.canvas.draw()
 
@@ -324,8 +350,6 @@ class PlotterApp:
         self.xdata = xdata
         self.ydata = ydata
 def main():
-    root = Tk()
-    app = PlotterApp(root)
 
     # Initialize empty arrays to store the data
     column1 = []
@@ -357,15 +381,20 @@ def main():
 
 
 
-    app.set_data(xAxis, yAxis)
-
     gradArr = calculate_gradients(xAxis, yAxis)
     # remove the last value from xAxis and yAxis
     # xAxis = xAxis[:-1]
     # yAxis = yAxis[:-1]
 
-    saturationPointVal = saturationPoint(xAxis, yAxis)
-    print("Saturation point: ", saturationPointVal)
+    saturationPointValX = saturationPoint(xAxis, yAxis)
+    saturationPointValY = saturationField(xAxis, yAxis)
+    nucleationField = max(xAxis)
+    print("Nucleation field: ", nucleationField)
+    root = Tk()
+    app = PlotterApp(root, saturationPointX=saturationPointValX, saturationPointY=saturationPointValY, nucleationField=nucleationField)
+    app.set_data(xAxis, yAxis)
+
+    print("Saturation point: ", saturationPointValX, saturationPointValY)
     # plotGraph(xAxis, yAxis,"Hysteresis curve", saturationPoint=saturationPointVal)
     # plot the gradient
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPointVal)
@@ -375,9 +404,14 @@ def main():
     saturationField(xAxis, yAxis)
     sfd(xAxis, yAxis)
     initialSlope(xAxis, yAxis)
-    remMag(xAxis, yAxis)
+    remMagVal = remMag(xAxis, yAxis)
     rigidField(xAxis, yAxis)
+    coercive = coerciveField(xAxis, yAxis)
     root.mainloop()
+
+    root = Tk()
+    app = PlotterApp(root, saturationPointX=saturationPointValX, saturationPointY=saturationPointValY, nucleationField=nucleationField, remMag=remMagVal, coerciveField=coercive)
+    app.set_data(xAxis, yAxis)
 
 if __name__ == '__main__':
         main()
