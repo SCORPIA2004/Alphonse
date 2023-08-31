@@ -74,8 +74,7 @@ def plotGraph(x, y, title, saturationPoint=0):
     # plt.ylim(-2, 2)
 
     # make x axis line
-    plt.axhline(y=0, color='k')
-    plt.axvline(x=0, color='k')
+    # plt.axhline(y=0, color='k')
 
 
     plt.xlabel('X-axis')
@@ -117,16 +116,14 @@ def largest(arr, n):
     return max
 
 def saturationField(xAxis, yAxis):
-
-    #### OLD CODE working with offset = kneedle.knee + kneedle.knee / 2
     xAxisArr = np.array(xAxis)
     yAxisArr = np.array(yAxis)
-    kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
-    saturationPointX = kneedle.knee + kneedle.knee / 2
-    # saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
 
+    kneedle = KneeLocator(xAxisArr, yAxisArr, S=1.0, curve="concave", direction="increasing")
+    saturationPointX = kneedle.knee + largest(xAxisArr, xAxisArr.size) / 3
+
+    # plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPoint)
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
-    plotGraph(xAxisArr, yAxisArr,"Hysteresis curve", saturationPoint=saturationPointX)
     # plotGraph(xAxis[:-1], gradArr,"Gradient", saturationPoint=saturationPoint)
     print(round(saturationPointX, 3))
     # find x value closest to saturationPointX
@@ -222,6 +219,8 @@ def rigidField(xAxis, yAxis):
     # xAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 0)
     # yAxisArr = movingAverageSmoothing(xAxisArrOld, yAxisArrOld, 1)
 
+
+
     gradArr = calculate_gradients(xAxisArr, yAxisArr)
 
     # find index when xAxisArr element is closest to 0
@@ -237,9 +236,10 @@ def rigidField(xAxis, yAxis):
     print("Gradient: ", gradient)
     c = y2 - gradient * x2
     print("c: ", c)
-    print("Remanent magnetization: ", c)
 
-    return c
+
+    # print("Remanent magnetization: ", rf)
+    return
     # xAxisArr = np.array(xAxis)
     # yAxisArr = np.array(yAxis)
     # gradArr = calculate_gradients(xAxisArr, yAxisArr)
@@ -315,8 +315,6 @@ class PlotterApp:
         self.plot.set_ylabel("Y Axis")
         self.plot.set_title("Plot")
         self.plot.grid(True)
-        self.plot.axhline(y=0, color='k')
-        self.plot.axvline(x=0, color='k')
 
         self.canvas.draw()
 
@@ -332,8 +330,8 @@ def main():
     column2 = []
 
     # Specify the path to your CSV file
-    csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
-    # csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
+    # csv_file_path = 'Ni-CYL - 1.csv'  # Update with the actual file path
+    csv_file_path = 'Ni - CYL - 2.csv'  # Update with the actual file path
     # csv_file_path = 'sample1.csv'  # Update with the actual file path
     # csv_file_path = 'sample3.csv'  # Update with the actual file path
     # csv_file_path = 'sample4.csv'  # Update with the actual file path

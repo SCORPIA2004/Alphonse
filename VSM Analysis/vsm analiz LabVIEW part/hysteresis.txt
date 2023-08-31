@@ -1,0 +1,46 @@
+*1.Coercive Field(Hc)
+  Ascending ve descending eğrilerin x eksenini kestikleri noktaların toplamlarının ikiye bölünmesi
+2.Saturation Magnetization(Ms)
+  hysteresis eğrisinin x eksenine paralel olduğundaki manyetik momenttir. eğrinin Türevi sıfır iken olan değerdir.
+3.Coercive Field(Hc)Offset
+  ????
+*4.Remanent Magnetization(Mr)
+   Ascending ve descending eğrilerin y eksenini kestikleri noktaların toplamlarının ikiye bölünmesi
+5.Initial Slope (dM/dH|H=0)
+  ???
+6.Squareness
+  ???
+7.Nucleation field(Hn)
+  ???
+8.Saturation field(Hs)
+  eğrinin Türevi ilk kez sıfır olduğundaki manyetik alan değeridir.
+9.Switching field distribution(SFD)
+  ????
+10.Area enclosed by the hysteresis loop
+   Ascending ve descending eğrileri arasında kalan alanın hesaplanmasıdır.
+11.Slope at Coercive Field (Hc)
+   Ascending ve descending eğrilerin x eksenini kestikleri sıradaki eğimleridir.
+
+
+*1.Rigid Field(Hc)
+ Dividing by two the sums of the points at which the ascending and descending curves intersect the x-axis
+2.Saturation Magnetization(Ms)
+ it is the magnetic moment when the hysteresis curve is parallel to the x-axis. It is the value when the derivative of the curve is zero.
+3.Rigid Field(Hc)Offset
+ ????
+*4.Remanent Magnetization(Mr)
+ Dividing by two the sums of the points where the ascending and descending curves intersect the y-axis
+5.Initial Slope (dM/dH|H=0)
+ ???
+6.Squareness
+ ???
+7.Nucleation field(Hn)
+ ???
+8.Saturation field(HS)
+ the derivative of the curve is the magnetic field value when it is zero for the first time.
+9.Switching field distribution(SFD)
+ ????
+10.Area enclosed by the hysteresis loop
+ It is the calculation of the area between the ascending and descending curves Decoupled.
+11.Slope at Coercive Field (Hc)
+ Ascending and descending are the slopes of the curves in the order in which they intersect the x-axis.
